@@ -1,2 +1,2 @@
-# trello-alike-app
-Trello-alike app
+Zhuravski Vlad  
+853504
