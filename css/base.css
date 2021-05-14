@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --main-color: #D29034; /* darkorange */
+    --header-color: #b37b2c;
+    --header-dark-color: #9D6C27;
+    --button-color: #DDAB65;
+    --neutral-color: #FAFBFC;
+    --button-hover-color: #E0B475;
+    --header-button-color: #CAA36C;
+    --header-button-hover-color: #C29556;
+    --app-name-color: #D9BD95;
+    --app-name-hover-color: #F0E5D5;
+    --blue-color: #0067A3;
+    --white-button-color: #F0F2F5;
+    --white-button-hover-color: #E7E9ED;
+    --cards-container-color: #EBECF0;
+    --cards-container-button-color: #DADBE2;
+}
+
+body {
+    margin: 0;
+}
+
+*::selection {
+    color: red;
+    background: yellow;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+
+    background-color: var(--header-color);
+}
+
+header a {
+    padding: 14px 20px;
+    margin: 5px;
+
+    text-decoration: none;
+    background-color: var(--header-button-color);
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.app-name {
+    padding: 0;
+    margin: 0;
+
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    background-color: var(--header-color);
+    color: var(--app-name-color);
+    transition: color 0.3s;
+}
+
+.app-name:hover {
+    background-color: var(--header-color);
+    color: var(--app-name-hover-color);
+}
+
+.header-start {
+    display: flex;
+    justify-content: flex-start;
+    flex: 33%;
+}
+
+.header-start > a {
+    /*align-self: center;*/
+    /*color: black;*/
+}
+
+.header-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 33%;
+}
+
+.header-end {
+    display: flex;
+    justify-content: flex-end;
+    flex: 33%;
+}
+
+.header-end > a {
+    /*align-self: center;*/
+}
+
+header a:hover {
+    background-color: var(--header-button-hover-color);
+    color: white;
+}
+
+button {
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+a {
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 600px){
+    header a {
+        padding: 7px 10px;
+    }
+}

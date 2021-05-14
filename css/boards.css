@@ -1,0 +1,60 @@
+main {
+    margin-top: 100px;
+}
+
+main > h1 {
+    text-align: center;
+}
+
+.boards-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    max-width: 700px;
+    margin: auto;
+}
+
+.boards-container > li {
+    margin: 10px;
+    /*padding: 30px;*/
+    width: 180px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+    font-size: 24px;
+    list-style-type: none;
+    background-color: var(--header-color);
+    transition: background-color 0.3s;
+}
+
+.boards-container > li:hover {
+    background-color: var(--header-dark-color);
+    cursor: pointer;
+}
+
+.boards-container > li > button {
+    background-color: var(--white-button-color);
+}
+
+.boards-container > li:hover > button {
+    background-color: var(--white-button-hover-color);
+}
+
+.boards-container > li > a {
+    text-decoration: none;
+    margin: 10px;
+    color: white;
+}
+
+#button-li {
+    background-color: var(--white-button-color);
+}
+
+#button-li:hover {
+    background-color: var(--white-button-hover-color);
+}

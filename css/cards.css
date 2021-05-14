@@ -1,0 +1,119 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    display: flex;
+    flex-grow: 1;
+}
+
+.main-container {
+    display: flex;
+    /*align-self: stretch;*/
+    flex-grow: 1;
+    overflow: auto;
+
+    background-color: var(--main-color);
+}
+
+.cards-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    align-self: flex-start;
+
+    background-color: var(--cards-container-color);
+    border-radius: 10px;
+}
+
+.cards-container > .card-header-li {
+    background-color: var(--cards-container-color);
+    cursor: default;
+    margin: 0;
+}
+
+.cards-container > .card-header-li > h1 {
+    margin: 0;
+}
+
+.cards-container > .card-header-li:hover {
+    background-color: var(--cards-container-color);
+    cursor: default;
+}
+
+.cards-container > .card-button-li {
+    background-color: var(--cards-container-color);
+}
+
+.cards-container > .card-button-li:hover {
+    background-color: var(--cards-container-button-color);
+}
+
+.cards-container > .card-button-li > button {
+    background-color: var(--cards-container-color);
+    transition: background-color 0.3s;
+}
+
+.cards-container > .card-button-li:hover > button {
+    background-color: var(--cards-container-button-color);
+}
+
+#add-list-button {
+    display: flex;
+    align-self: flex-start;
+    align-items: center;
+
+    width: 250px;
+    min-width: 250px;
+    height: 40px;
+
+    margin-top: 10px;
+    margin-right: 10px;
+    padding-left: 25px;
+
+    border-radius: 10px;
+    background-color: var(--button-color);
+    color: white;
+}
+
+#add-list-button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.cards-container > button {
+    width: 250px;
+    margin: 5px;
+    height: 40px;
+
+    border-radius: 10px;
+}
+
+.cards-container > li {
+    padding: 10px;
+    margin: 3px 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 250px;
+    overflow: hidden;
+
+    background-color: var(--header-color);
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.cards-container > li:hover {
+    background-color: var(--header-dark-color);
+    cursor: pointer;
+}
+
+.cards-container > li:hover > button {
+    background-color: var(--cards-container-button-color);
+}
+
+.cards-container > li > a {
+    text-decoration: none;
+    color: white;
+}
