@@ -9,17 +9,17 @@
 </head>
 <body>
 <main>
-    <form method="post" action="boards.html">
+    <form method="post" onsubmit="signUp();return false;">
         <div class="register-container">
             <h1>Create your account</h1>
             <label><b>Email</b>
-                <input type="text" placeholder="Enter email address" name="email" required="required">
+                <input id="email-input" type="text" placeholder="Enter email address" name="email" required="required">
             </label>
             <label><b>Password</b>
-                <input type="password" placeholder="Enter password" name="password" required="required">
+                <input id="password-input" type="password" placeholder="Enter password" name="password" required="required">
             </label>
             <label><b>Repeat password</b>
-                <input type="password" placeholder="Repeat password" name="repeat_password" required="required">
+                <input id="repeat-password-input" type="password" placeholder="Repeat password" name="repeat_password" required="required">
             </label>
             <button type="submit">Create account</button>
             <p>
@@ -28,5 +28,13 @@
         </div>
     </form>
 </main>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<!-- Realtime database -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<!-- Authentication -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+
+<script src="../js/auth.js"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@
                 <h1>List1 name</h1>
             </li>
             <li>
-                <a href="#">Card1 name</a>
+                <a id="myBtn" href="#">Card1 name</a>
             </li>
             <li>
                 <a href="#">Card2 name</a>
@@ -42,12 +42,95 @@
             <li>
                 <a href="#">Card5 name</a>
             </li>
+            <li>
+                <a href="#">Card3 name</a>
+            </li>
+            <li>
+                <a href="#">Card4 name</a>
+            </li>
+            <li>
+                <a href="#">Card5 name</a>
+            </li>
+            <li>
+                <a href="#">Card4 name</a>
+            </li>
+            <li>
+                <a href="#">Card3 name</a>
+            </li>
+            <li>
+                <a href="#">Card4 name</a>
+            </li>
+            <li>
+                <a href="#">Card5 name</a>
+            </li>
+            <li>
+                <a href="#">Card3 name</a>
+            </li>
+            <li>
+                <a href="#">Card4 name</a>
+            </li>
+            <li>
+                <a href="#">Card5 name</a>
+            </li>
+            <li>
+                <a href="#">Card4 name</a>
+            <li>
+                <a href="#">Card5 name</a>
+            </li>
             <li class="card-button-li">
                 <button>Add another card</button>
             </li>
         </ul>
         <button id="add-list-button">Add another list</button>
     </div>
+
+    <div id="myModal" class="modal">
+        <form class="modal-content" method="get" action="cards.html">
+            <div class="modal-header">
+                <label>
+                    <input type="text" name="card_name" placeholder="Edit card name">
+                </label>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <label>Description
+                    <textarea name="card_description" placeholder="Edit card description"></textarea>
+                </label>
+                <label>Colour
+                    <input type="color" name="card_color">
+                </label>
+                <label>Expire date
+                    <input type="date" name="card_expire_date">
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button type="button">Delete</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let modal = document.getElementById("myModal");
+        let btn = document.getElementById("myBtn");
+        let span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
 </main>
 </body>
 </html>

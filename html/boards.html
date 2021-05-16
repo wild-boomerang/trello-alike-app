@@ -18,7 +18,8 @@
     </div>
     <div class="header-end">
         <a href="#">+</a>
-        <a href="login.html">Log out</a>
+<!--        <a href="login.html">Log out</a>-->
+        <a href="login.html" onclick="signOut()">Log out</a>
     </div>
 </header>
 <main>
@@ -45,5 +46,13 @@
         </li>
     </ul>
 </main>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+
+<script src="../js/database.js"></script>
+<script src="../js/boards.js"></script>
+<script src="../js/auth.js"></script>
 </body>
 </html>
