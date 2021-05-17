@@ -9,7 +9,8 @@
 </head>
 <body>
 <main>
-    <form method="post" onsubmit="signUp();return false;">
+    <form method="post" onsubmit="signUp();return false;" action="boards.html">
+<!--    <form id="register-form">-->
         <div class="register-container">
             <h1>Create your account</h1>
             <label><b>Email</b>
@@ -35,6 +36,7 @@
 <!-- Authentication -->
 <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
 
+<script src="../js/database.js"></script>
 <script src="../js/auth.js"></script>
 </body>
 </html>

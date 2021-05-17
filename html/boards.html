@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/boards.css" type="text/css">
     <link rel="stylesheet" href="../css/base.css" type="text/css">
     <link rel="stylesheet" href="../css/ul.css" type="text/css">
+    <link rel="stylesheet" href="../css/modal.css" type="text/css">
 </head>
 <body>
 <header>
@@ -17,34 +18,85 @@
         <a href="boards.html" class="app-name">App name</a>
     </div>
     <div class="header-end">
-        <a href="#">+</a>
-<!--        <a href="login.html">Log out</a>-->
+        <a href="#" onclick="showModal()">+</a>
         <a href="login.html" onclick="signOut()">Log out</a>
     </div>
 </header>
 <main>
     <h1>Your boards</h1>
 
-    <ul class="boards-container">
-        <li>
-            <a href="cards.html">Board1 name</a>
-        </li>
-        <li>
-            <a href="cards.html">Board2 name</a>
-        </li>
-        <li>
-            <a href="cards.html">Board3 name</a>
-        </li>
-        <li>
-            <a href="cards.html">Board4 name</a>
-        </li>
-        <li>
-            <a href="cards.html">Board5 name</a>
-        </li>
-        <li id="button-li">
-            <button>Create new board</button>
+    <ul id="boards" class="boards-container">
+<!--        <li>-->
+<!--            <a href="cards.html">Board1 name</a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="cards.html">Board2 name</a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="cards.html">Board3 name</a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="cards.html">Board4 name</a>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <a href="cards.html">Board5 name</a>-->
+<!--        </li>-->
+        <li id="button-li" onclick="showModal()">
+            <button id="myBtn">Create new board</button>
         </li>
     </ul>
+
+    <div id="myModal" class="modal">
+        <form id="create-board-form" class="modal-content" method="get" onsubmit="createOrUpdateBoard();return false;">
+            <div class="modal-header">
+                <label>
+                    <input type="text" name="board_name" placeholder="Edit board name" id="board_name" required="required">
+                </label>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <label>Colour
+                    <input type="color" name="board_color" id="board_color" required="required">
+                </label>
+                <p id="boardUid"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteButton" type="button" onclick="deleteBoardWrapper()">Delete</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let modal = document.getElementById("myModal");
+        let btn = document.getElementById("myBtn");
+        let span = document.getElementsByClassName("close")[0];
+        let deleteBtn = document.getElementById("deleteButton");
+        deleteBtn.style.display = "none";
+        let boardUid =document.getElementById("boardUid");
+        boardUid.style.display = "none";
+
+        function showModal() {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+            deleteBtn.style.display = "none";
+            document.getElementById("create-board-form").reset();
+            document.getElementById("boardUid").innerText = "";
+        }
+
+        btn.onclick = showModal;
+        span.onclick = closeModal;
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
 </main>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
@@ -52,7 +104,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
 
 <script src="../js/database.js"></script>
-<script src="../js/boards.js"></script>
 <script src="../js/auth.js"></script>
+<script src="../js/boards.js"></script>
 </body>
 </html>

@@ -1,14 +1,70 @@
+let signed_user;
+// console.log(signed_user);
+
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
-        let uid = user.uid;
-        alert(uid);
-        // ...
+        signed_user = user;
+        showBoards(signed_user);
     } else {
         // User is signed out
-        // ...
-        alert("You are disabled!");
+        console.log("You are disabled!");
         location.href = "login.html";
     }
 });
+
+function createOrUpdateBoard() {
+    let board_name = document.getElementById("board_name").value;
+    let board_color = document.getElementById("board_color").value;
+    let boardUid = document.getElementById("boardUid").innerText;
+
+    if (signed_user !== undefined) {
+        if (boardUid === "") {
+            writeBoard(signed_user, board_name, board_color);
+        } else {
+            updateBoard(signed_user, boardUid, board_name, board_color);
+        }
+        closeModal();
+    } else {
+        alert("You are not authenticated yet!");
+    }
+}
+
+function AddNewElement(uid, title, color) {
+    let li = document.createElement("li");
+    li.style.backgroundColor = color;
+    // li.onclick = function() {
+    //     location.href = "cards.html";
+    // };
+
+    let boardButton = document.createElement("a");
+    boardButton.style.backgroundColor = color;
+    boardButton.onclick = function() {
+        location.href = "cards.html";
+    };
+    let editButton = document.createElement("a");
+    editButton.className = "editButton";
+    editButton.onclick = function() {
+        modal.style.display = "block";
+        document.getElementById("board_name").value = title;
+        document.getElementById("board_color").value = color;
+        document.getElementById("deleteButton").style.display = "inline";
+        document.getElementById("boardUid").innerText = uid;
+    };
+    editButton.appendChild(document.createTextNode("Edit"));
+    let text = document.createTextNode(title);
+    li.appendChild(boardButton);
+    li.appendChild(editButton);
+    boardButton.appendChild(text);
+
+    let list = document.getElementById("boards");
+    list.insertBefore(li, list.childNodes[0]);
+}
+
+function deleteBoardWrapper() {
+    let boardUid = document.getElementById("boardUid").innerText;
+
+    deleteBoard(signed_user, boardUid);
+    closeModal();
+}

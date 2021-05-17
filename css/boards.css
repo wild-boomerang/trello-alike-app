@@ -23,26 +23,27 @@ main > h1 {
     height: 100px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
     border-radius: 10px;
     font-size: 24px;
     list-style-type: none;
     background-color: var(--header-color);
-    transition: background-color 0.3s;
+    transition: filter 0.4s;
 }
 
 .boards-container > li:hover {
-    background-color: var(--header-dark-color);
+    filter: brightness(70%);
     cursor: pointer;
 }
 
 .boards-container > li > button {
     background-color: var(--white-button-color);
+    transition: filter 0.4s;
 }
 
 .boards-container > li:hover > button {
-    background-color: var(--white-button-hover-color);
+    filter: brightness(70%);
 }
 
 .boards-container > li > a {
@@ -52,9 +53,19 @@ main > h1 {
 }
 
 #button-li {
+    justify-content: center;
+
     background-color: var(--white-button-color);
+    transition: filter 0.4s;
 }
 
 #button-li:hover {
-    background-color: var(--white-button-hover-color);
+    filter: brightness(70%);
+}
+
+.editButton {
+    align-self: flex-start;
+
+    border: 3px solid black;
+    z-index: 1;
 }

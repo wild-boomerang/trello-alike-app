@@ -1,5 +1,18 @@
 // "use strict";
 
+// function processForm(e) {
+//     if (e.preventDefault) e.preventDefault();
+//     console.log("asdf");
+//     /* do what you want with the form */
+//     signUp();
+//
+//     // You must return false to prevent the default form behavior
+//     return false;
+// }
+// let form = document.getElementById('register-form');
+// console.log(form);
+// form.addEventListener("submit", processForm);
+
 function signUp() {
     let email = document.getElementById("email-input").value;
     let password = document.getElementById("password-input").value;
@@ -9,17 +22,19 @@ function signUp() {
 
     if (password === password_repeat) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed in
                 let user = userCredential.user;
-                // ...
-
+                // await is necessary for correct write to database
+                await database.ref("users/" + user.uid).set({
+                    "email": user.email
+                });
                 location.href = "boards.html";
             })
             .catch((error) => {
                 let errorCode = error.code;
                 let errorMessage = error.message;
-                // ..
+                alert(errorCode);
                 alert(errorMessage);
             });
     }
@@ -37,8 +52,7 @@ function signIn() {
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // Signed in
-            let user = userCredential.user;
-            // ...
+            // let user = userCredential.user;
             location.href = "boards.html";
         })
         .catch((error) => {
