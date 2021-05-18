@@ -1,18 +1,5 @@
 // "use strict";
 
-// function processForm(e) {
-//     if (e.preventDefault) e.preventDefault();
-//     console.log("asdf");
-//     /* do what you want with the form */
-//     signUp();
-//
-//     // You must return false to prevent the default form behavior
-//     return false;
-// }
-// let form = document.getElementById('register-form');
-// console.log(form);
-// form.addEventListener("submit", processForm);
-
 function signUp() {
     let email = document.getElementById("email-input").value;
     let password = document.getElementById("password-input").value;
@@ -29,6 +16,7 @@ function signUp() {
                 await database.ref("users/" + user.uid).set({
                     "email": user.email
                 });
+                document.getElementById("registerForm").reset();
                 location.href = "boards.html";
             })
             .catch((error) => {
@@ -53,6 +41,7 @@ function signIn() {
         .then((userCredential) => {
             // Signed in
             // let user = userCredential.user;
+            document.getElementById("loginForm").reset();
             location.href = "boards.html";
         })
         .catch((error) => {
