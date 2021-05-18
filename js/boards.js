@@ -41,8 +41,11 @@ function AddNewElement(uid, title, color) {
     let boardButton = document.createElement("a");
     boardButton.style.backgroundColor = color;
     boardButton.onclick = function() {
+        localStorage.setItem("selectedBoardUid", uid);
+        localStorage.setItem("selectedBoardColor", color);
         location.href = "cards.html";
     };
+
     let editButton = document.createElement("a");
     editButton.className = "editButton";
     editButton.onclick = function() {

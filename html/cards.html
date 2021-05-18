@@ -18,72 +18,59 @@
         <a href="boards.html" class="app-name">App name</a>
     </div>
     <div class="header-end">
-        <a href="#">+</a>
-        <a href="login.html">Log out</a>
+        <a href="login.html" onclick="signOut()">Log out</a>
     </div>
 </header>
 <main>
-    <div class="main-container">
-        <ul class="cards-container">
-            <li class="card-header-li">
-                <h1>List1 name</h1>
-            </li>
-            <li>
-                <a id="myBtn" href="#">Card1 name</a>
-            </li>
-            <li>
-                <a href="#">Card2 name</a>
-            </li>
-            <li>
-                <a href="#">Card3 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            </li>
-            <li>
-                <a href="#">Card5 name</a>
-            </li>
-            <li>
-                <a href="#">Card3 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            </li>
-            <li>
-                <a href="#">Card5 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            </li>
-            <li>
-                <a href="#">Card3 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            </li>
-            <li>
-                <a href="#">Card5 name</a>
-            </li>
-            <li>
-                <a href="#">Card3 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            </li>
-            <li>
-                <a href="#">Card5 name</a>
-            </li>
-            <li>
-                <a href="#">Card4 name</a>
-            <li>
-                <a href="#">Card5 name</a>
-            </li>
-            <li class="card-button-li">
-                <button>Add another card</button>
-            </li>
-        </ul>
-        <button id="add-list-button">Add another list</button>
-    </div>
+    <ul id="listsContainer" class="main-container">
+        <li class="cards-container">
+            <button class="card-header-li" onclick="showListModal()">List1 name</button>
+            <ul id="cardsList">
+                <li>
+                    <a id="myBtn" href="#">Card1 name</a>
+                </li>
+                <li>
+                    <a href="#">Card2 name</a>
+                </li>
+                <li>
+                    <a href="#">Card3 name</a>
+                </li>
+                <li>
+                    <a href="#">Card4 name</a>
+                </li>
+                <li>
+                    <a href="#">Card5 name</a>
+                </li>
+            </ul>
+            <button class="card-button-li">Add another card</button>
+        </li>
+
+        <li class="cards-container">
+            <button class="card-header-li" onclick="showListModal()">List1 name</button>
+            <ul>
+                <li>
+                    <a href="#">Card1 name</a>
+                </li>
+                <li>
+                    <a href="#">Card2 name</a>
+                </li>
+                <li>
+                    <a href="#">Card3 name</a>
+                </li>
+                <li>
+                    <a href="#">Card4 name</a>
+                </li>
+                <li>
+                    <a href="#">Card5 name</a>
+                </li>
+            </ul>
+            <button class="card-button-li">Add another card</button>
+        </li>
+
+        <li>
+            <button id="addListButton" onclick="showListModal()">Add another list</button>
+        </li>
+    </ul>
 
     <div id="myModal" class="modal">
         <form class="modal-content" method="get" action="cards.html">
@@ -110,7 +97,6 @@
             </div>
         </form>
     </div>
-
     <script>
         let modal = document.getElementById("myModal");
         let btn = document.getElementById("myBtn");
@@ -132,6 +118,57 @@
         }
     </script>
 
+    <div id="createListModal" class="modal">
+        <form id="createListForm" class="modal-content" method="get" onsubmit="createOrUpdateList();return false;">
+            <div class="modal-header">
+                <label>
+                    <input type="text" name="list_name" placeholder="Edit list name" id="listTitle" required="required">
+                </label>
+                <span class="close" onclick="closeListModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="listUid"></p>
+            </div>
+            <div class="modal-footer">
+                <button id="deleteListButton" type="button" onclick="deleteListWrapper()">Delete</button>
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        let listModal = document.getElementById("createListModal");
+        let deleteBtn = document.getElementById("deleteListButton");
+        deleteBtn.style.display = "none";
+        let listUid = document.getElementById("listUid");
+        listUid.style.display = "none";
+
+        function showListModal() {
+            listModal.style.display = "block";
+        }
+
+        function closeListModal() {
+            listModal.style.display = "none";
+            deleteBtn.style.display = "none";
+            document.getElementById("createListForm").reset();
+            document.getElementById("listUid").innerText = "";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target === listModal) {
+                closeListModal();
+            }
+        }
+    </script>
 </main>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+
+<script src="../js/database.js"></script>
+<script src="../js/auth.js"></script>
+<script src="../js/cards.js"></script>
 </body>
 </html>

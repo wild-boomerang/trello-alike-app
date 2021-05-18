@@ -55,6 +55,38 @@ function deleteBoard(user, boardKey) {
     console.log("Board deleted");
 }
 
+function createList(user, boardUid, listTitle) {
+    let newListUid = database.ref().child('users/' + user.uid + "/boards/" + boardUid + "/lists").push().key;
+    database.ref('users/' + user.uid + "/boards/" + boardUid + "/lists/" + newListUid).set({
+        title: listTitle
+    });
+    console.log("List created");
+}
+
+function updateList(user, boardKey, listUid, listTitle) {
+    database.ref('users/' + user.uid + "/boards/" + boardKey + "/lists/" + listUid).update({
+        title: listTitle
+    });
+    console.log("List updated");
+}
+
+function deleteList(user, boardKey, listUid) {
+    database.ref('users/' + user.uid + "/boards/" + boardKey + "/lists/" + listUid).remove();
+    console.log("List deleted");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Updating
 function writeNewPost(email, username) {
     // A post entry.
