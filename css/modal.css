@@ -62,11 +62,12 @@
 
     border-radius: 5px;
     color: white;
-    background-color: var(--header-button-color);
+    background-color: gray;
+    transition: background-color 0.3s;
 }
 
 .modal-footer > button:hover {
-    background-color: var(--header-button-hover-color);
+    background-color: darkgray;
 }
 
 /* The Close Button */

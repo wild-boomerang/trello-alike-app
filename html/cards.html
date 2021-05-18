@@ -82,7 +82,7 @@
             </div>
             <div class="modal-body">
                 <label>Description
-                    <textarea id="cardDescription" name="card_description" placeholder="Edit card description" required="required"></textarea>
+                    <textarea id="cardDescription" name="card_description" placeholder="Edit card description"></textarea>
                 </label>
                 <label>Colour
                     <input id="cardColor" type="color" name="card_color" required="required">
@@ -109,7 +109,6 @@
         function showCardModal() {
             cardModal.style.display = "block";
             listUidForCard = this.id;
-            console.log(listUidForCard);
         }
 
         function closeCardModal() {
@@ -117,6 +116,8 @@
             deleteCardButton.style.display = "none";
             document.getElementById("createCardForm").reset();
             document.getElementById("cardUid").innerText = "";
+            document.getElementById("createCardForm").style.backgroundColor =
+                getComputedStyle(document.documentElement).getPropertyValue('--header-color');
         }
     </script>
 

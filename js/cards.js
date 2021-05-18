@@ -93,7 +93,7 @@ function addList(uid, title) {
 
         snapshot.forEach(function (childSnapshot) {
             let data = childSnapshot.val();
-            let card = addCard(childSnapshot.key, data.title, data.description, data.color, data.expireDate, uid);
+            let card = addCard(childSnapshot.key, data.title, data.description, data.color, data.expire_date, uid);
             cardsList.appendChild(card);
         });
     });
@@ -126,6 +126,7 @@ function addCard(uid, title, description, color, expireDate, listUid) {
     cardLi.style.backgroundColor = color;
     cardLi.onclick = function() {
         id = listUid;
+        document.getElementById("createCardForm").style.backgroundColor = color;
         showCardModal();
         document.getElementById("cardTitle").value = title;
         document.getElementById("cardDescription").value = description;
