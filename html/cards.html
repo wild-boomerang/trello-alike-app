@@ -64,7 +64,7 @@
                     <a href="#">Card5 name</a>
                 </li>
             </ul>
-            <button class="card-button-li">Add another card</button>
+            <button class="card-button-li" onclick="showCardModal()">Add another card</button>
         </li>
 
         <li>
@@ -72,49 +72,51 @@
         </li>
     </ul>
 
-    <div id="myModal" class="modal">
-        <form class="modal-content" method="get" action="cards.html">
+    <div id="cardModal" class="modal">
+        <form id="createCardForm" class="modal-content" method="get" onsubmit="createOrUpdateCard();return false;">
             <div class="modal-header">
                 <label>
-                    <input type="text" name="card_name" placeholder="Edit card name">
+                    <input id="cardTitle" type="text" name="card_name" placeholder="Edit card name" required="required">
                 </label>
-                <span class="close">&times;</span>
+                <span onclick="closeCardModal()" class="close">&times;</span>
             </div>
             <div class="modal-body">
                 <label>Description
-                    <textarea name="card_description" placeholder="Edit card description"></textarea>
+                    <textarea id="cardDescription" name="card_description" placeholder="Edit card description" required="required"></textarea>
                 </label>
                 <label>Colour
-                    <input type="color" name="card_color">
+                    <input id="cardColor" type="color" name="card_color" required="required">
                 </label>
                 <label>Expire date
-                    <input type="date" name="card_expire_date">
+                    <input id="cardExpireDate" type="date" name="card_expire_date">
                 </label>
+                <p id="cardUid"></p>
             </div>
             <div class="modal-footer">
-                <button type="button">Delete</button>
+                <button id="deleteCardButton" type="button" onclick="deleteCardWrapper()">Delete</button>
                 <button type="submit">Submit</button>
             </div>
         </form>
     </div>
     <script>
-        let modal = document.getElementById("myModal");
-        let btn = document.getElementById("myBtn");
-        let span = document.getElementsByClassName("close")[0];
+        let cardModal = document.getElementById("cardModal");
+        let deleteCardButton = document.getElementById("deleteCardButton");
+        deleteCardButton.style.display = "none";
+        let cardUid = document.getElementById("cardUid");
+        cardUid.style.display = "none";
+        let listUidForCard;
 
-        btn.onclick = function() {
-            modal.style.display = "block";
+        function showCardModal() {
+            cardModal.style.display = "block";
+            listUidForCard = this.id;
+            console.log(listUidForCard);
         }
 
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target === modal) {
-                modal.style.display = "none";
-            }
+        function closeCardModal() {
+            cardModal.style.display = "none";
+            deleteCardButton.style.display = "none";
+            document.getElementById("createCardForm").reset();
+            document.getElementById("cardUid").innerText = "";
         }
     </script>
 
@@ -157,6 +159,8 @@
         window.onclick = function(event) {
             if (event.target === listModal) {
                 closeListModal();
+            } else if (event.target === cardModal) {
+                closeCardModal();
             }
         }
     </script>

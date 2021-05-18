@@ -75,55 +75,30 @@ function deleteList(user, boardKey, listUid) {
     console.log("List deleted");
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-// Updating
-function writeNewPost(email, username) {
-    // A post entry.
-    let userData = {
-        email: email,
-        username: username
-    };
-
-    // Get a key for a new Post.
-    let newUserKey = firebase.database().ref().child('users').push().key;
-
-    // Write the new post's data simultaneously in the posts list and the user's post list.
-    let updates = {};
-    updates['/users/' + newUserKey] = userData;
-    // updates['/user-posts/' + uid + '/' + newUserKey] = userData;
-
-    return database.ref().update(updates);
+function createCard(user, boardUid, listUid, cardTitle, cardDescription, cardColor, cardExpireDate) {
+    let path = 'users/' + user.uid + "/boards/" + boardUid + "/lists/" + listUid + "/cards";
+    let newCardUid = database.ref().child(path).push().key;
+    database.ref(path + "/" + newCardUid).set({
+        title: cardTitle,
+        description: cardDescription,
+        color: cardColor,
+        expire_date: cardExpireDate
+    });
+    console.log("Card created");
 }
 
-function updateUserInfo(id, email, username) {
-    let userData = {};
-    if (email != null) {
-        userData.email = email;
-    }
-    if (username != null) {
-        userData.username = username;
-    }
-
-    console.log(userData);
-    let updates = {};
-    updates['/users/' + id] = userData;
-
-    return database.ref().update(updates);
+function updateCard(user, boardUid, listUid, cardUid, cardTitle, cardDescription, cardColor, cardExpireDate) {
+    let path = 'users/' + user.uid + "/boards/" + boardUid + "/lists/" + listUid + "/cards/" + cardUid;
+    database.ref(path).update({
+        title: cardTitle,
+        description: cardDescription,
+        color: cardColor,
+        expire_date: cardExpireDate
+    });
+    console.log("Card updated");
 }
 
-// writeNewPost("sadfa", "dfss");
-// updateUserInfo(3, null, "11111");
-// database.ref("users/" + 3).update({
-//     username: "sdaafa"
-// });
+function deleteCard(user, boardKey, listUid, cardUid) {
+    database.ref('users/' + user.uid + "/boards/" + boardKey + "/lists/" + listUid + "/cards/" + cardUid).remove();
+    console.log("List deleted");
+}

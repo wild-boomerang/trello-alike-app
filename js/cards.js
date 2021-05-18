@@ -1,7 +1,6 @@
 let signed_user;
 let selectedBoardUid = localStorage.getItem("selectedBoardUid");
 let selectedBoardColor = localStorage.getItem("selectedBoardColor");
-// console.log(signed_user);
 
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -44,7 +43,7 @@ function showLists() {
 
 function addList(uid, title) {
     let list = document.createElement("li");
-    list.classList.add("cards-container")
+    list.classList.add("cards-container");
 
     let listHeaderButton = document.createElement("button");
     listHeaderButton.classList.add("card-header-li");
@@ -58,38 +57,49 @@ function addList(uid, title) {
 
     let addCardButton = document.createElement("button");
     addCardButton.classList.add("card-header-li");
+    addCardButton.id = uid;
     addCardButton.appendChild(document.createTextNode("Add another card"));
-    // addCardButton.onclick = showListModal;
+    addCardButton.onclick = showCardModal;
 
-    // let cardsList = document.createElement("ul");
-    // cardsList.id = uid;
-    //
-    // let cardsRef = database.ref('users/' + signed_user.uid + "/boards/" + selectedBoardUid + '/lists/' + uid + "/cards");
-    // cardsRef.on('value', function (snapshot) {
-    //     let cardsList = document.getElementById(uid);
-    //
-    //     while (cardsList.hasChildNodes()) {
-    //         cardsList.removeChild(cardsList.firstChild);
-    //     }
-    //
-    //     snapshot.forEach(function (childSnapshot) {
-    //         let data = childSnapshot.val();
-    //         let card = addCard(childSnapshot.key, data.title, data.description, data.color, data.expireDate);
-    //         cardsList.appendChild(card);
-    //     });
-    // });
+    let cardsList = document.createElement("ul");
+
+    let cardsRef = database.ref('users/' + signed_user.uid + "/boards/" + selectedBoardUid + '/lists/' + uid + "/cards");
+    cardsRef.on('value', function (snapshot) {
+        // let cardsList = document.getElementById(uid);
+        //
+        // while (cardsList.hasChildNodes()) {
+        //     cardsList.removeChild(cardsList.firstChild);
+        // }
+
+        snapshot.forEach(function (childSnapshot) {
+            let data = childSnapshot.val();
+            let card = addCard(childSnapshot.key, data.title, data.description, data.color, data.expireDate, uid);
+            cardsList.appendChild(card);
+        });
+    });
 
     list.appendChild(listHeaderButton);
-    // list.appendChild(cardsList);
+    list.appendChild(cardsList);
     list.appendChild(addCardButton);
 
     return list;
 }
 
-function addCard(uid, title, description, color, expireDate) {
+function addCard(uid, title, description, color, expireDate, listUid) {
     let cardLi = document.createElement("li");
     let a = document.createElement("a");
     a.appendChild(document.createTextNode(title));
+    cardLi.style.backgroundColor = color;
+    cardLi.onclick = function() {
+        id = listUid;
+        showCardModal();
+        document.getElementById("cardTitle").value = title;
+        document.getElementById("cardDescription").value = description;
+        document.getElementById("cardColor").value = color;
+        document.getElementById("cardExpireDate").value = expireDate;
+        document.getElementById("cardUid").appendChild(document.createTextNode(uid));
+        document.getElementById("deleteCardButton").style.display = "inline";
+    };
 
     cardLi.appendChild(a);
     return cardLi;
@@ -116,4 +126,30 @@ function deleteListWrapper() {
 
     deleteList(signed_user, selectedBoardUid, listUid);
     closeListModal();
+}
+
+function createOrUpdateCard() {
+    let cardTitle = document.getElementById("cardTitle").value;
+    let cardDescription = document.getElementById("cardDescription").value;
+    let cardColor = document.getElementById("cardColor").value;
+    let cardExpireDate = document.getElementById("cardExpireDate").value;
+    let cardUid = document.getElementById("cardUid").innerText;
+
+    if (signed_user !== undefined) {
+        if (cardUid === "") {
+            createCard(signed_user, selectedBoardUid, listUidForCard, cardTitle, cardDescription, cardColor, cardExpireDate);
+        } else {
+            updateCard(signed_user, selectedBoardUid, listUidForCard, cardUid, cardTitle, cardDescription, cardColor, cardExpireDate);
+        }
+        closeCardModal();
+    } else {
+        alert("You are not authenticated yet!");
+    }
+}
+
+function deleteCardWrapper() {
+    let cardUid = document.getElementById("cardUid").innerText;
+
+    deleteCard(signed_user, selectedBoardUid, listUidForCard, cardUid);
+    closeCardModal();
 }
