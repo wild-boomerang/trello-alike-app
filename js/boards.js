@@ -31,6 +31,25 @@ function createOrUpdateBoard() {
     }
 }
 
+function showBoards(user) {
+    let boardsRef = database.ref('users/' + user.uid + "/boards");
+    boardsRef.on('value', function (snapshot) {
+        // Clearing boards, but saving add button
+        let list = document.getElementById("boards");
+        let item = document.getElementById("button-li");
+        item.parentNode.removeChild(item);
+        while (list.hasChildNodes()) {
+            list.removeChild(list.firstChild);
+        }
+        list.appendChild(item);
+
+        snapshot.forEach(function (childSnapshot) {
+            let data = childSnapshot.val();
+            AddNewElement(childSnapshot.key, data.title, data.color);
+        });
+    });
+}
+
 function AddNewElement(uid, title, color) {
     let li = document.createElement("li");
     li.style.backgroundColor = color;
@@ -46,7 +65,8 @@ function AddNewElement(uid, title, color) {
         location.href = "cards.html";
     };
 
-    let editButton = document.createElement("a");
+    let editButton = document.createElement("img");
+    editButton.src = "../res/edit.svg";
     editButton.className = "editButton";
     editButton.onclick = function() {
         modal.style.display = "block";
@@ -55,11 +75,10 @@ function AddNewElement(uid, title, color) {
         document.getElementById("deleteButton").style.display = "inline";
         document.getElementById("boardUid").innerText = uid;
     };
-    editButton.appendChild(document.createTextNode("Edit"));
-    let text = document.createTextNode(title);
+
     li.appendChild(boardButton);
     li.appendChild(editButton);
-    boardButton.appendChild(text);
+    boardButton.appendChild(document.createTextNode(title));
 
     let list = document.getElementById("boards");
     list.insertBefore(li, list.childNodes[0]);

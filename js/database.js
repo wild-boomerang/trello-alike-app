@@ -23,25 +23,6 @@ function writeBoard(user, board_name, board_color) {
     console.log("Board created");
 }
 
-function showBoards(user) {
-    let boardsRef = database.ref('users/' + user.uid + "/boards");
-    boardsRef.on('value', function (snapshot) {
-        // Clearing boards, but saving add button
-        let list = document.getElementById("boards");
-        let item = document.getElementById("button-li");
-        item.parentNode.removeChild(item);
-        while (list.hasChildNodes()) {
-            list.removeChild(list.firstChild);
-        }
-        list.appendChild(item);
-
-        snapshot.forEach(function (childSnapshot) {
-            let data = childSnapshot.val();
-            AddNewElement(childSnapshot.key, data.title, data.color);
-        });
-    });
-}
-
 function updateBoard(user, boardKey, boardName, boardColor) {
     database.ref('users/' + user.uid + "/boards/" + boardKey).update({
         title: boardName,

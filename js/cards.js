@@ -46,7 +46,8 @@ function addList(uid, title) {
     list.classList.add("cards-container");
 
     let listHeaderButton = document.createElement("button");
-    listHeaderButton.classList.add("card-header-li");
+    listHeaderButton.classList.add("card-button");
+    listHeaderButton.classList.add("card-header");
     listHeaderButton.appendChild(document.createTextNode(title));
     listHeaderButton.onclick = function() {
         showListModal();
@@ -56,12 +57,31 @@ function addList(uid, title) {
     };
 
     let addCardButton = document.createElement("button");
-    addCardButton.classList.add("card-header-li");
+    addCardButton.classList.add("card-button");
     addCardButton.id = uid;
     addCardButton.appendChild(document.createTextNode("Add another card"));
     addCardButton.onclick = showCardModal;
 
     let cardsList = document.createElement("ul");
+
+    // drag&drop support
+    cardsList.ondrop = function (event) {
+        event.preventDefault();
+        let data = event.dataTransfer.getData("text");
+        let cardUid = event.dataTransfer.getData("cardUid");
+        let cardTitle = event.dataTransfer.getData("cardTitle");
+        let cardDescription = event.dataTransfer.getData("");
+        let cardColor = event.dataTransfer.getData("cardColor");
+        let cardExpireDate = event.dataTransfer.getData("cardExpireDate");
+        let listUid = event.dataTransfer.getData("listUid");
+
+        event.target.appendChild(document.getElementById(data));
+        deleteCard(signed_user, selectedBoardUid, listUid, cardUid);
+        createCard(signed_user, selectedBoardUid, listUid, cardTitle, cardDescription, cardColor, cardExpireDate);
+    };
+    cardsList.ondragover = function (event) {
+        event.preventDefault();
+    };
 
     let cardsRef = database.ref('users/' + signed_user.uid + "/boards/" + selectedBoardUid + '/lists/' + uid + "/cards");
     cardsRef.on('value', function (snapshot) {
@@ -89,6 +109,20 @@ function addCard(uid, title, description, color, expireDate, listUid) {
     let cardLi = document.createElement("li");
     let a = document.createElement("a");
     a.appendChild(document.createTextNode(title));
+
+    // drag&drop support
+    cardLi.id = uid;
+    cardLi.draggable = true;
+    cardLi.ondragstart = function (event) {
+        event.dataTransfer.setData("text", event.target.id);
+        event.dataTransfer.setData("cardUid", uid);
+        event.dataTransfer.setData("cardTitle", title);
+        event.dataTransfer.setData("cardDescription", description);
+        event.dataTransfer.setData("cardColor", color);
+        event.dataTransfer.setData("cardExpireDate", expireDate);
+        event.dataTransfer.setData("listUid", listUid);
+    };
+
     cardLi.style.backgroundColor = color;
     cardLi.onclick = function() {
         id = listUid;

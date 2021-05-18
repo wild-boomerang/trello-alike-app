@@ -15,7 +15,7 @@ main {
     flex-grow: 1;
     overflow-x: auto;
 
-    background-color: var(--main-color);
+    /*background-color: var(--main-color);*/
 }
 
 .cards-container {
@@ -32,17 +32,20 @@ main {
     border-radius: 10px;
 }
 
-.card-header-li {
+.card-header {
+    font-weight: bold;
+}
+
+.card-button {
     padding-left: 10px;
     margin: 10px;
     overflow: hidden;
 
     text-align: left;
-    font-weight: bold;
     transition: background-color 0.3s;
 }
 
-.card-header-li:hover {
+.card-button:hover {
     background-color: var(--cards-container-button-color);
 }
 
@@ -102,16 +105,16 @@ main {
 
     background-color: var(--header-color);
     border-radius: 10px;
-    transition: background-color 0.3s;
+    transition: filter 0.3s;
 }
 
 .cards-container > ul > li:hover {
-    background-color: var(--header-dark-color);
+    filter: brightness(70%);
     cursor: pointer;
 }
 
 .cards-container > ul > li:hover > button {
-    background-color: var(--cards-container-button-color);
+    filter: brightness(70%);
 }
 
 .cards-container > ul > li > a {
