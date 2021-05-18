@@ -65,7 +65,7 @@ function addList(uid, title) {
     let cardsList = document.createElement("ul");
 
     // drag&drop support
-    cardsList.ondrop = function (event) {
+    list.ondrop = function (event) {
         event.preventDefault();
         let data = event.dataTransfer.getData("text");
         let cardUid = event.dataTransfer.getData("cardUid");
@@ -75,12 +75,14 @@ function addList(uid, title) {
         let cardExpireDate = event.dataTransfer.getData("cardExpireDate");
         let listUid = event.dataTransfer.getData("listUid");
 
-        event.target.appendChild(document.getElementById(data));
+        list.childNodes[1].appendChild(document.getElementById(data));
+
         deleteCard(signed_user, selectedBoardUid, listUid, cardUid);
-        createCard(signed_user, selectedBoardUid, listUid, cardTitle, cardDescription, cardColor, cardExpireDate);
+        createCard(signed_user, selectedBoardUid, uid, cardTitle, cardDescription, cardColor, cardExpireDate);
     };
-    cardsList.ondragover = function (event) {
+    list.ondragover = function (event) {
         event.preventDefault();
+        event.dataTransfer.dropEffect = "move";
     };
 
     let cardsRef = database.ref('users/' + signed_user.uid + "/boards/" + selectedBoardUid + '/lists/' + uid + "/cards");
@@ -121,6 +123,8 @@ function addCard(uid, title, description, color, expireDate, listUid) {
         event.dataTransfer.setData("cardColor", color);
         event.dataTransfer.setData("cardExpireDate", expireDate);
         event.dataTransfer.setData("listUid", listUid);
+
+        event.dataTransfer.dropEffect = "move";
     };
 
     cardLi.style.backgroundColor = color;
