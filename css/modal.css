@@ -102,9 +102,9 @@
 
 input[type=text] {
     width: 100%;
-    /*display: inline-block;*/
-
     height: 30px;
+    padding: 10px;
+
     border: none;
     border-radius: 3px;
     background: #f1f1f1;
@@ -112,6 +112,7 @@ input[type=text] {
 
 textarea {
     width: 100%;
+    padding: 10px;
 
     border-radius: 3px;
     border: none;

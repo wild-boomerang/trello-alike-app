@@ -36,17 +36,19 @@ function deleteBoard(user, boardKey) {
     console.log("Board deleted");
 }
 
-function createList(user, boardUid, listTitle) {
+function createList(user, boardUid, listTitle, listIndex) {
     let newListUid = database.ref().child('users/' + user.uid + "/boards/" + boardUid + "/lists").push().key;
     database.ref('users/' + user.uid + "/boards/" + boardUid + "/lists/" + newListUid).set({
-        title: listTitle
+        title: listTitle,
+        index: listIndex
     });
     console.log("List created");
 }
 
-function updateList(user, boardKey, listUid, listTitle) {
+function updateList(user, boardKey, listUid, listTitle, listIndex) {
     database.ref('users/' + user.uid + "/boards/" + boardKey + "/lists/" + listUid).update({
-        title: listTitle
+        title: listTitle,
+        index: listIndex
     });
     console.log("List updated");
 }

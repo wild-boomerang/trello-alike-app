@@ -31,13 +31,25 @@ function showLists() {
         while (listsList.hasChildNodes()) {
             listsList.removeChild(listsList.firstChild);
         }
-        listsList.appendChild(addListButton);
 
+        let htmlListArray = [];
         snapshot.forEach(function (childSnapshot) {
             let data = childSnapshot.val();
             let list = addList(childSnapshot.key, data.title);
-            listsList.insertBefore(list, listsList.childNodes[0]);
+            htmlListArray.push({htmlList: list, listIndex: data.index});
+            // listsList.insertBefore(list, listsList.childNodes[0]);
         });
+
+        htmlListArray.sort(function (a, b) {
+            return a.listIndex - b.listIndex;
+        });
+
+        for (let i = 0; i < htmlListArray.length; i++) {
+            let htmlList = htmlListArray[i].htmlList;
+            let listIndex = htmlListArray[i].listIndex;
+            listsList.insertBefore(htmlList, listsList.childNodes[listIndex]);
+        }
+        listsList.appendChild(addListButton);
     });
 }
 
@@ -79,6 +91,7 @@ function addList(uid, title) {
 
         deleteCard(signed_user, selectedBoardUid, listUid, cardUid);
         createCard(signed_user, selectedBoardUid, uid, cardTitle, cardDescription, cardColor, cardExpireDate);
+        console.log(cardTitle);
     };
     list.ondragover = function (event) {
         event.preventDefault();
@@ -127,6 +140,10 @@ function addCard(uid, title, description, color, expireDate, listUid) {
         event.dataTransfer.dropEffect = "move";
     };
 
+    // cardLi.addEventListener("touchmove", function (e) {
+    //     console.log(e.target);
+    // });
+
     cardLi.style.backgroundColor = color;
     cardLi.onclick = function() {
         id = listUid;
@@ -147,12 +164,13 @@ function addCard(uid, title, description, color, expireDate, listUid) {
 function createOrUpdateList() {
     let listTitle = document.getElementById("listTitle").value;
     let listUid = document.getElementById("listUid").innerText;
+    let listIndex = document.getElementById("listsContainer").childElementCount; // will be on 1 greater
 
     if (signed_user !== undefined) {
         if (listUid === "") {
-            createList(signed_user, selectedBoardUid, listTitle);
+            createList(signed_user, selectedBoardUid, listTitle, listIndex);
         } else {
-            updateList(signed_user, selectedBoardUid, listUid, listTitle);
+            updateList(signed_user, selectedBoardUid, listUid, listTitle, listIndex);
         }
         closeListModal();
     } else {
