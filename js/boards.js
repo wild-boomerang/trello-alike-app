@@ -53,9 +53,6 @@ function showBoards(user) {
 function AddNewElement(uid, title, color) {
     let li = document.createElement("li");
     li.style.backgroundColor = color;
-    // li.onclick = function() {
-    //     location.href = "cards.html";
-    // };
 
     let boardButton = document.createElement("a");
     boardButton.style.backgroundColor = color;
@@ -69,6 +66,7 @@ function AddNewElement(uid, title, color) {
     editButton.src = "../res/edit.svg";
     editButton.className = "editButton";
     editButton.onclick = function() {
+        document.getElementById("create-board-form").style.backgroundColor = color;
         modal.style.display = "block";
         document.getElementById("board_name").value = title;
         document.getElementById("board_color").value = color;
